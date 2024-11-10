@@ -35,11 +35,12 @@ class _NoteListState extends State<NoteList>{
 
         floatingActionButton: FloatingActionButton(onPressed: ()=>{
           debugPrint('Floating Button Tapped'),
+
         },
           tooltip: 'Adds a new note',
-          child: Icon(Icons.edit),
           shape: CircleBorder(),
           backgroundColor: Colors.green,
+          child: Icon(Icons.edit),
       ),
     );
   }
@@ -52,7 +53,7 @@ class _NoteListState extends State<NoteList>{
             color: Colors.white,
             elevation: 1.0,
               child: ListTile(
-                leading: CircleAvatar(
+                leading: const CircleAvatar(
                   backgroundColor: Colors.cyan,
                   child: Icon(Icons.edit_note_outlined),
               ),

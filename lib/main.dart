@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'new_note_screen.dart';
 import 'pages/note_list.dart';
 
 void main() {
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const NoteList(title: 'My Notes'),
+      home: const NewNoteScreen(),
     );
   }
 }
