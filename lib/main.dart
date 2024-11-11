@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'new_note_screen.dart';
+import 'pages/new_note_screen.dart';
 import 'pages/note_list.dart';
 
 void main() {

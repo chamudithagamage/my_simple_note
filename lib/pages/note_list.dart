@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '/new_note_screen.dart';
+import 'new_note_screen.dart';
 
 class NoteList extends StatefulWidget{
 
