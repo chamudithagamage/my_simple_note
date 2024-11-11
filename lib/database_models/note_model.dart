@@ -1,4 +1,4 @@
-class Note{
+class NoteModel{
 
   late int _id;
   late String _title;
@@ -6,9 +6,9 @@ class Note{
   late String _date;
   late int _priority;
 
-  Note( this._title, this._date,this._description, this._priority);
+  NoteModel( this._title, this._date,this._description, this._priority);
 
-  Note.withId( this._title, this._date,this._description, this._priority);
+  NoteModel.withId( this._title, this._date,this._description, this._priority);
 
 //getters
   int get id => _id;
@@ -48,14 +48,14 @@ class Note{
     };
   }
 
-  Note.fromMap(Map<String,dynamic>map)
+  NoteModel.fromMap(Map<String,dynamic>map)
       : _id = map["id"],
         _date = map["date"],
         _description = map["description"],
         _title = map["title"],
         _priority = map["priority"];
 
-  Note.fromMapObject(Map<String, dynamic> map){
+  NoteModel.fromMapObject(Map<String, dynamic> map){
     this._title = map["title"];
     this._date = map["date"];
     this._description = map["description"];
