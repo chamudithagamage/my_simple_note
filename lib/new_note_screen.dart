@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
+
 class NewNoteScreen extends StatefulWidget{
 
-  const NewNoteScreen({super.key});
+  final String appBarHeading;
+
+  const NewNoteScreen({super.key, required this.appBarHeading});
 
   @override
   State<StatefulWidget> createState() => _NewNoteScreenState();
@@ -13,16 +16,39 @@ class _NewNoteScreenState extends State<NewNoteScreen>{
   static const _priority = ['High','Low'];
   static const _kebabDropdown = ['Delete','Share'];
 
-  TextEditingController noteTitleController = TextEditingController();
-  TextEditingController noteDescriptionController = TextEditingController();
+   late String appBarHeading;
+
+  @override
+  void initState(){
+    super.initState();
+    appBarHeading = widget.appBarHeading;
+  }
+
+
+TextEditingController noteTitleController = TextEditingController();
+TextEditingController noteDescriptionController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context){
 
     TextStyle? textStyle = Theme.of(context).textTheme.titleMedium;
-    return Scaffold(
+    return WillPopScope(
+
+      //writing what function to execute after user press back arrow button.
+      onWillPop: () async{
+        moveBackPage();
+        return Future.value(true);
+      },
+
+      child: Scaffold(
       appBar: AppBar(
-        title: Text('New Entry'),
+        title: Text(widget.appBarHeading),
+          leading: IconButton(
+              onPressed: (){
+                moveBackPage(); //write a function to move back
+              }, 
+              icon: Icon(Icons.arrow_back)),
 
           actions: [
             Padding(
@@ -34,7 +60,7 @@ class _NewNoteScreenState extends State<NewNoteScreen>{
                     debugPrint('Delete was selected');
                   }
                   else if(value == 'Share'){
-                    debugPrint('Share was selectd');
+                    debugPrint('Share was selected');
                   }
                 }, itemBuilder: (BuildContext context) {
                 return [
@@ -42,20 +68,33 @@ class _NewNoteScreenState extends State<NewNoteScreen>{
                     value: 'delete',
                     child: Align(
                       alignment: Alignment.center,
-                      child: Text('Delete',textAlign: TextAlign.center),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children:[
+                          Text('Delete',textAlign: TextAlign.center),
+                          SizedBox(width: 20.0,),
+                          Icon(Icons.delete_outlined),
+                        ],
+                      ),
                     ),
                   ),
                   const PopupMenuItem<String>(
                     value: 'share',
-                    child: Align(
+                      child: Align(
                       alignment: Alignment.center,
-                      child: Text('Share',textAlign: TextAlign.center),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                          children:[
+                            Text('Share',textAlign: TextAlign.center),
+                             SizedBox(width: 20.0,),
+                             Icon(Icons.share_outlined),
+                          ],
                       ),
-
                     ),
-                  ];
+                  ),
+                ];
                 },
-                icon: Icon(Icons.more_vert),
+                icon: const Icon(Icons.more_vert),
               ),
             )
          ]
@@ -139,7 +178,7 @@ class _NewNoteScreenState extends State<NewNoteScreen>{
                     onPressed: (){
                       debugPrint('Pressed Save Button');
                     },
-                    child: Text('Save', color: Colors.black),
+                    child: Text('Save'),
 
 
                 )
@@ -147,6 +186,10 @@ class _NewNoteScreenState extends State<NewNoteScreen>{
           ],
         ),
       ),
-    );
+    ));
+  }
+
+  void moveBackPage(){
+    Navigator.pop(context);
   }
 }

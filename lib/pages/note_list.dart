@@ -3,7 +3,7 @@ import '/new_note_screen.dart';
 
 class NoteList extends StatefulWidget{
 
-  const NoteList({super.key, required String title});
+  const NoteList({super.key});
 
   @override
   State<StatefulWidget> createState()=> _NoteListState();
@@ -33,9 +33,9 @@ class _NoteListState extends State<NoteList>{
       ),
       body: getNoteListView(),
 
-        floatingActionButton: FloatingActionButton(onPressed: ()=>{
-          debugPrint('Floating Button Tapped'),
-
+        floatingActionButton: FloatingActionButton(onPressed: (){
+          debugPrint('Floating Button Tapped');
+          moveToNewNoteScreen('Add Note');
         },
           tooltip: 'Adds a new note',
           shape: CircleBorder(),
@@ -62,12 +62,21 @@ class _NoteListState extends State<NoteList>{
               subtitle: Text('Test Date'),
               trailing: Icon(Icons.more_vert, color: Colors.grey),
                 //edit on tap
-                  onTap: ()=> debugPrint("List Tile Tapped"),
+                  onTap: () {
+                    debugPrint("List Tile Tapped");
+                    moveToNewNoteScreen('Edit Note');
 
+                  }
             ),
           );
         },
 
     );
+  }
+  //To avoid code repetition
+  void moveToNewNoteScreen(String title){
+    Navigator.push(context, MaterialPageRoute(builder: (context){
+      return NewNoteScreen(appBarHeading: title,);
+    }));
   }
 }
