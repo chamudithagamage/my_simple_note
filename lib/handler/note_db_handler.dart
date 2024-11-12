@@ -42,21 +42,29 @@ class NoteDbHandler{
   }
 
   void _dbCreate(Database database, int newDb) async{
-    await database.execute('CREATE TABLE $notesTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colTitle TEXT'
-        ',$colDescription Text, $colDate TEXT)');//query
+    await database.execute(
+        'CREATE TABLE $notesTable('
+            '$colId INTEGER PRIMARY KEY AUTOINCREMENT,'
+            '$colTitle TEXT,'
+            '$colDescription Text,'
+            '$colDate TEXT)');//query
   }
 
   //get notes from database function
-    getNotes() async {
+    Future<List<Map<String, dynamic>>>getNotes() async {
     Database database = await this.database;
     var response = await database.query(notesTable);
+    debugPrint('Notes from db: $response');
     return response;
   }
   //insert new notes into database
   Future<int> insertNotes(NoteModel noteModel) async {
     Database database = await this.database;
-    var response = await database.insert(notesTable, noteModel.toMap());
-    debugPrint('Updating note: ${noteModel.toMap()}');
+
+    var noteMap = noteModel.toMap();
+    noteMap['id'] = null;
+    var response = await database.insert(notesTable, noteMap);
+    debugPrint('Updating note: $noteMap');
     return response;
   }
   //update notes database
