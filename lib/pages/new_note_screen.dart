@@ -189,6 +189,8 @@ TextEditingController noteDescriptionController = TextEditingController();
                     onPressed: (){
                       debugPrint('Pressed Save Button');
                       _save();
+                      moveBackPage();
+                      debugPrint('$noteModel');
                     },
                     child: Text('Save'),
 
@@ -218,8 +220,21 @@ TextEditingController noteDescriptionController = TextEditingController();
   void _save()async{
     
     noteModel.date = DateFormat.yMMMd().format(DateTime.now());
-    int response;
-    response = await handler.updateNotes(noteModel);
+    if (noteModel.id == 0) {
+      noteModel.id = 0;
+      await handler.insertNotes(noteModel);
+      debugPrint('Updating note: ${noteModel.toMap()}');
+    } else {
+      await handler.updateNotes(noteModel);
+      debugPrint('Updating note: ${noteModel.toMap()}');
+    }
+    // int response = await handler.updateNotes(noteModel);
+    //  if(response > 0){
+    //    debugPrint('Note Saved Successfully');
+    //  }else{
+    //    debugPrint('Failed to save');
+    //  }
+
     }
 
 }

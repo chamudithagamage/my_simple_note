@@ -29,9 +29,7 @@ class NoteDbHandler{
   }
 
   Future<Database> get database async{
-    if(_database == null){
-      _database = await initializeDatabase();
-    }
+    _database ??= await initializeDatabase();
     return _database!;
   }
 
@@ -51,19 +49,25 @@ class NoteDbHandler{
   //get notes from database function
     getNotes() async {
     Database database = await this.database;
-    var response = await database.query(notesTable, orderBy: 'ASC');
+    var response = await database.query(notesTable);
     return response;
   }
   //insert new notes into database
   Future<int> insertNotes(NoteModel noteModel) async {
     Database database = await this.database;
     var response = await database.insert(notesTable, noteModel.toMap());
+    debugPrint('Updating note: ${noteModel.toMap()}');
     return response;
   }
   //update notes database
   Future<int> updateNotes(NoteModel noteModel) async {
     var database = await this.database;
     var result = await database.update(notesTable, noteModel.toMap(), where: '$colId = ?', whereArgs: [noteModel.id]);
+    debugPrint('Updating note: ${noteModel.toMap()}');
+
+    //to check ids are generated correctly
+    var allNotes = await database.query(notesTable);
+    debugPrint('All notes in the database: $allNotes');
     return result;
   }
   //delete a note from the database

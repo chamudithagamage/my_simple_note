@@ -23,6 +23,11 @@ class NoteModel{
       _description = description;
     }
   }
+
+  set id(int value) {
+    _id = value;
+  }
+
   set date(String date){
     _date = date;
   }

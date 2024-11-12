@@ -49,7 +49,7 @@ class _NoteListState extends State<NoteList>{
 
         floatingActionButton: FloatingActionButton(onPressed: (){
           debugPrint('Tapped floating button');
-          moveToNewNoteScreen('Add Note', NoteModel('', '', ''));
+          moveToNewNoteScreen('Add Note', NoteModel.withId(0,'', '', ''));
         },
           tooltip: 'Adds a new note',
           shape: CircleBorder(),
@@ -84,7 +84,7 @@ class _NoteListState extends State<NoteList>{
                 //edit on tap
                   onTap: () {
                     debugPrint("List Tile Tapped");
-                    moveToNewNoteScreen('Edit Note',NoteModel('', '',''));
+                    moveToNewNoteScreen('Edit Note',NoteModel.withId(0,'', '', ''));
 
                   }
             ),
